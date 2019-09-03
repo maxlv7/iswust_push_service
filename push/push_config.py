@@ -6,9 +6,9 @@ key = 123456789
 update_url = backend_base_url + "api/v1/course/getCourse?update=True&verifycode="
 push_qqbot_url = qq_bot_base_url
 get_week_url = backend_base_url + "api/v1/util/getWeek"
-redis_url = "redis://127.0.0.1:5000:6379/0"
+redis_url = "redis://127.0.0.1:6379/0"
 
-db_ip = "192.168.31.187"
-db_username = "root"
+db_ip = "127.0.0.1"
+db_username = "iswust_backend"
 db_password = "root"
 db_name = "iswust_backend"

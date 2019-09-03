@@ -65,11 +65,13 @@ def parse_course_hint(course_table, day: int):
                     today_course_list.append(_course)
 
     today_course_list.sort(key=lambda e: e['class_time'][0])
+    if len(today_course_list) == 0:
+        msg = msg + "今天没有课哦!"
     for course in today_course_list:
-        t = '{}--{}--{}({})\n'.format(tip(course["class_time"]), course["location"], course["class_name"],
-                                      course["teacher_name"])
+        t = '{}\n- {}({})\n- {}\n\n'.format(tip(course["class_time"]), course["class_name"],
+                                       course["teacher_name"], course["location"])
         msg = msg + t
-    return msg
+    return msg[:-2]
 
 
 class Db():
