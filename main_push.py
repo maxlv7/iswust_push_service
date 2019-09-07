@@ -17,12 +17,22 @@ app = Celery(
 app.conf.beat_schedule = {
     'update_course': {
         'task': 'push.tasks.update_all_course',
-        'schedule': crontab(minute=0,hour=5,day_of_week='0'),
+        'schedule': crontab(minute=0, hour=5, day_of_week='0'),
         'args': (),
     },
     'send_course': {
         'task': 'push.tasks.send_course',
-        'schedule': crontab(minute='0,30',hour=7),
+        'schedule': crontab(minute='0', hour=7),
+        'args': (),
+    },
+    'clear_today_key': {
+        'task': 'push.tasks.clear_today_key',
+        'schedule': crontab(minute='10', hour=22),
+        'args': (),
+    },
+    'check_push_status': {
+        'task': 'push.tasks.check_push_status',
+        'schedule': crontab(minute='15', hour=7),
         'args': (),
     },
 }
@@ -37,4 +47,4 @@ if __name__ == '__main__':
     # celery -A main_push worker -B
 
     # 启动flower
-    #celery -A main_push flower --port=5555
+    # celery -A main_push flower --port=5555
