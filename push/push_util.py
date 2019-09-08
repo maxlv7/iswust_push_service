@@ -1,6 +1,22 @@
+import hashlib
+import os
+
 import pymysql
 
 from push.push_config import db_ip, db_name, db_password, db_username
+
+
+def bot_hash(message: str) -> str:
+    message = str(message)
+    try:
+        key = os.environ.get("ENCRYPT_KEY").encode()
+    except:
+        key = 'qq_bot_is_so_niu_bi'.encode()
+    inner = hashlib.md5()
+    inner.update(message.encode())
+    outer = hashlib.md5()
+    outer.update(inner.hexdigest().encode() + key)
+    return outer.hexdigest()
 
 
 def send_private_msg(user_id, message, verifycode):
@@ -69,7 +85,7 @@ def parse_course_hint(course_table, day: int):
         msg = msg + "今天没有课哦!"
     for course in today_course_list:
         t = '{}\n- {}({})\n- {}\n\n'.format(tip(course["class_time"]), course["class_name"],
-                                       course["teacher_name"], course["location"])
+                                            course["teacher_name"], course["location"])
         msg = msg + t
     return msg[:-2]
 

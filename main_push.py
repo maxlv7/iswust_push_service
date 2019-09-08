@@ -43,8 +43,11 @@ app.conf.update(
 
 if __name__ == '__main__':
     app.worker_main()
-    # 启动 celery
-    # celery -A main_push worker -B
+    # 启动 celery beat
+    # celery -A main_push beat -l info
+
+    # 启动 celery worker
+    # celery -A main_push worker -l info
 
     # 启动flower
     # celery -A main_push flower --port=5555

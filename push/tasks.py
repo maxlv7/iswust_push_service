@@ -6,12 +6,12 @@ import requests
 
 from main_push import app, executor
 from push.push_config import update_url, key, push_qqbot_url
-from push.push_util import Db, send_private_msg, parse_course_hint
+from push.push_util import Db, send_private_msg, parse_course_hint, bot_hash
 from push.redis_util import r
 
 
 def get_(qq):
-    res = requests.get(update_url + str(int(qq) ^ key)).json()
+    res = requests.get(update_url + str(bot_hash(qq))).json()
     msg = res["msg"]
     if int(res["code"]) == 200:
         r.sadd("update_success", f"update {qq} {msg}")
