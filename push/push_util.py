@@ -19,11 +19,11 @@ def bot_hash(message: str) -> str:
     return outer.hexdigest()
 
 
-def send_private_msg(user_id, message, verifycode):
+def send_private_msg(user_id, message, token):
     msg = {
         "qq": user_id,
         "msg": message,
-        "verifycode": verifycode
+        "token": token
     }
     return msg
 
