@@ -11,7 +11,7 @@ def bot_hash(message: str) -> str:
     try:
         key = os.environ.get("ENCRYPT_KEY").encode()
     except:
-        key = 'qq_bot_is_so_niu_bi'.encode()
+        key = '123456789'.encode()
     inner = hashlib.md5()
     inner.update(message.encode())
     outer = hashlib.md5()

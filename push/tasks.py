@@ -28,8 +28,8 @@ def get_beijing_day():
 def push_msg(qq, course_table):
     day = get_beijing_day()
     msg = parse_course_hint(course_table, day)
-    verifycode = int(qq) ^ key
-    res = requests.post(push_qqbot_url, json=send_private_msg(qq, msg, verifycode))
+    token = bot_hash(qq)
+    res = requests.post(push_qqbot_url, json=send_private_msg(qq, msg, token))
     if int(res.json()["code"]) == 200:
         r.sadd("push_status_success", f"success push to->{qq}")
     else:
@@ -39,8 +39,8 @@ def push_msg(qq, course_table):
 def retry_push_msg(qq, course_table):
     day = get_beijing_day()
     msg = parse_course_hint(course_table, day)
-    verifycode = int(qq) ^ key
-    res = requests.post(push_qqbot_url, json=send_private_msg(qq, msg, verifycode))
+    token = bot_hash(qq)
+    res = requests.post(push_qqbot_url, json=send_private_msg(qq, msg, token))
     if int(res.json()["code"]) == 200:
         r.sadd("push_status_success", f"success push to->{qq}")
         r.srem("push_status_fail", f"fail push to->{qq}")
@@ -81,6 +81,7 @@ def check_push_status():
         # retry push
         all_fail = r.smembers("push_status_fail")
         for x in all_fail:
+            x = x.decode()
             qq = x[x.index(">") + 1:]
             with Db() as c:
                 c.execute("select uid from user where bind_qq={}".format(qq))
