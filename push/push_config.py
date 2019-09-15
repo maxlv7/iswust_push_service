@@ -3,7 +3,7 @@ backend_base_url = "http://127.0.0.1:5000/"
 
 key = 123456789
 
-update_url = backend_base_url + "api/v1/course/getCourse?update=True&verifycode="
+update_url = backend_base_url + "api/v1/course/getCourse?update=True&token={}&qq={}"
 push_qqbot_url = qq_bot_base_url
 get_week_url = backend_base_url + "api/v1/util/getWeek"
 redis_url = "redis://127.0.0.1:6379/0"

@@ -11,7 +11,7 @@ from push.redis_util import r
 
 
 def get_(qq):
-    res = requests.get(update_url + str(bot_hash(qq))).json()
+    res = requests.get(update_url.format(bot_hash(qq),qq)).json()
     msg = res["msg"]
     if int(res["code"]) == 200:
         r.sadd("update_success", f"update {qq} {msg}")
