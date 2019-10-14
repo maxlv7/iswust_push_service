@@ -13,6 +13,9 @@ from push.redis_util import r
 def get_(qq):
     res = requests.get(update_url.format(bot_hash(qq),qq)).json()
     msg = res["msg"]
+    # 更新之前清除所有的key
+    r.expire("update_success", -1)
+    r.expire("update_fail", -1)
     if int(res["code"]) == 200:
         r.sadd("update_success", f"update {qq} {msg}")
     else:
